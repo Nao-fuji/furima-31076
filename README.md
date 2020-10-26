@@ -1,24 +1,100 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column                 | Type    | Options     |
+| ---------------------- | ------- | ----------- |
+| nickname               | string  | null: false |
+| email                  | string  | null: false |
+| password               | string  | null: false |
+| last_name(full-width)  | string  | null: false |
+| first_name(full-width) | string  | null: false |
+| last_name(kana)        | string  | null: false |
+| first_name(kana)       | string  | null: false |
+| birthday_year          | integer | null: false |
+| birthday_month         | integer | null: false |
+| birthday_day           | integer | null: false |
 
-* Ruby version
 
-* System dependencies
+### Association
 
-* Configuration
+- has_many :comments
+- has_many :items
+- has_many :purchase
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
+## items テーブル
 
-* Services (job queues, cache servers, search engines, etc.)
+| Column           | Type       | Options                        |
+| ---------------- | ---------- | ------------------------------ |
+| name             | string     | null: false                    |
+| price            | integer    | null: false                    |
+| category         | string     | null: false                    |
+| status           | string     | null: false                    |
+| explain          | string     | null: false                    |
+| shipping_address | string     | null: false                    |
+| shipping_date    | integer    | null: false                    |
+| delivery_charge  | string     | null: false                    |
+| user             | references | null: false, foreign_key: true |
+| purchase         | references | null: false, foreign_key: true |
 
-* Deployment instructions
 
-* ...
+### Association
+
+- has_many :comments
+- has_one :purchase
+- belongs_to :user
+
+
+
+## comments テーブル
+
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| text   | string     | null: false                    |
+| user   | references | null: false, foreign_key: true |
+| items  | references | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+
+
+
+## purchase テーブル
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| when    | integer    | null: false                    |
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true |
+| address | references | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :item
+- belongs_to :user
+- has_one :address
+
+
+
+## address テーブル
+
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| postal_code   | integer    | null: false                    |
+| prefectures   | string     | null: false                    |
+| cities        | string     | null: false                    |
+| address       | string     | null: false                    |
+| building_name | string     | null: false                    |
+| phone_number  | integer    | null: false                    |
+| purchase      | references | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :purchase
