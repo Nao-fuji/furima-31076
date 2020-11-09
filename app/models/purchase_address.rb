@@ -7,7 +7,7 @@ class PurchaseAddress
   with_options presence: true do
     validates :postal_code, format:{with:/\A\d{3}[-]\d{4}\z/, message:'ハイフンを使用してください'}
     validates :phone_number, length:{maximum: 11},format: {with:/\A[0-9]+\z/, message:'ハイフンは必要ありません'}
-    validates :cities,:address,:token
+    validates :cities,:address,:token,:user_id,:item_id
   end
 
   def save
