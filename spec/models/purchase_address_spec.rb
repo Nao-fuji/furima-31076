@@ -8,7 +8,11 @@ RSpec.describe PurchaseAddress, type: :model do
 
     describe '商品購入機能' do
       context '購入ができる時' do 
-        it 'postal_code, prefectures_id, cities, address, building_name, phone_number,tokenが存在する時' do 
+        it 'postal_code, prefectures_id, cities, address, phone_number,tokenが存在する時に購入できる' do 
+          expect(@purchase_address).to be_valid
+        end
+        it 'building_nameが空でも購入できる' do 
+          @purchase_address.building_name = ""
           expect(@purchase_address).to be_valid
         end
       end
